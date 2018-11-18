@@ -2,9 +2,11 @@
 [![banner](https://raw.githubusercontent.com/link.png)](https://link.com)
 --->
 
-# 🌱  plantnotplant 🍂 plant classification subsystem
+# 🌱  plantnotplant 🍂 
+## Plant classification subsystem
 
->    Plant classification subsystem, hacking towards an automous AI rover hardware and software platform classify plants!
+#### Hacking towards an automous AI rover hardware and software platform classify plants!
+
 <!---
 >    [org](https://link.com) (add n2 link)
 --->
