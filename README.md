@@ -2,14 +2,56 @@
 
 # 🌱  plantnotplant 🍂 
 
->    [Description of repo](https://www.link/) component for (Python).
->    [org](https://link.com)
+>    Hack towards an automous AI rover hardware and software platform classify plants. .
+>    [org](https://link.com) (add n2 link)
 
 TODO Change this to match the repo name and testing environments
 [![Travis (.com)](https://img.shields.io/travis/com/link.svg)](https://travis-ci.com/orglink)
 [![Codacy coverage](https://img.shields.io/codacy/coverage/link.svg)](https://app.codacy.com/project/orglink)
 [![PyPI](https://img.shields.io/pypi/v/link.svg)](https://pypi.org/project/orglink/)
 [![GitHub contributors](https://img.shields.io/github/contributors/link.svg)](https://github.com/oceanprotocol/orglink/contributors)
+
+## Research plan:
+
+1) Deep learning pipeline for state transitions
+  - Recognize center of plant and perform classificaiton
+  - Recognize end of track without relying on hardware
+2) Deep learning pipeline for data labeling
+  - From hand-written label, recognize species of plant
+  - From hand-written label, apply data labels 
+     - Height of plant
+     - Number of plants
+     - ?? 
+3) Deep learning classification
+  - Collect N camera positions at a single plant
+  - Is 3D CNN better, or just a single position? 
+
+### Hardware:
+2) Rasperry-pi as master
+  - Camera: Night / Standard / Fisheye?
+  - Python stack
+  - Keras/Tensorflow
+  - Open CV
+  
+1) 2-axis mounted camera controlled by Arduino
+  - Stepper motor for linear
+  - Servo for camera scanning
+
+```
+Motor 1.7 A / stage
+
+DRV 8825 max continuous current: 1.5 A
+
+Target current: 1.3 A (derated)
+
+VREF = Current limit / 2 = 0.65V
+
+SEE: https://forum.arduino.cc/index.php?topic=415724.0
+```
+
+
+### Software:
+3D CNN
 
 ---
 
@@ -26,25 +68,10 @@ TODO Change this to match the repo name and testing environments
 
 ---
 
+
 ## Features
 
 TODO
-
-## Hardware
-
-Motor 1.7 A / stage
-
-DRV 8825 max continuous current: 1.5 A
-
-Target current: 1.3 A (derated)
-
-VREF = Current limit / 2 = 0.65V
-
-SEE: https://forum.arduino.cc/index.php?topic=415724.0
-
-
-
-
 
 ## Prerequisites
 
