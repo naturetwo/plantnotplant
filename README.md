@@ -1,9 +1,11 @@
 [![banner](https://raw.githubusercontent.com/link.png)](https://link.com)
 
-# 🌱  plantnotplant 🍂 
+# 🌱  plantnotplant 🍂 plant classification subsystem
 
->    Hack towards an automous AI rover hardware and software platform classify plants. .
+>    Plant classification subsystem, hacking towards an automous AI rover hardware and software platform classify plants!
+<!---
 >    [org](https://link.com) (add n2 link)
+--->
 
 TODO Change this to match the repo name and testing environments
 [![Travis (.com)](https://img.shields.io/travis/com/link.svg)](https://travis-ci.com/orglink)
@@ -25,6 +27,13 @@ TODO Change this to match the repo name and testing environments
 3) Deep learning classification
   - Collect N camera positions at a single plant
   - Is 3D CNN better, or just a single position? 
+
+### Botony: 
+#### Ocimum × africanum, (Thai Basil)
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Kemangi.jpg/450px-Kemangi.jpg" height="200" width="170">
+
+#### Origanum vulgare (Oregano)
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Dobromysl_obecn%C3%A1.jpg/675px-Dobromysl_obecn%C3%A1.jpg" height="200" width="170">
 
 ### Hardware:
 2) Rasperry-pi as master
