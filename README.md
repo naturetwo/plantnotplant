@@ -1,4 +1,6 @@
+<!---
 [![banner](https://raw.githubusercontent.com/link.png)](https://link.com)
+--->
 
 # 🌱  plantnotplant 🍂 plant classification subsystem
 
@@ -7,11 +9,14 @@
 >    [org](https://link.com) (add n2 link)
 --->
 
+
+<!---
 TODO Change this to match the repo name and testing environments
 [![Travis (.com)](https://img.shields.io/travis/com/link.svg)](https://travis-ci.com/orglink)
 [![Codacy coverage](https://img.shields.io/codacy/coverage/link.svg)](https://app.codacy.com/project/orglink)
 [![PyPI](https://img.shields.io/pypi/v/link.svg)](https://pypi.org/project/orglink/)
 [![GitHub contributors](https://img.shields.io/github/contributors/link.svg)](https://github.com/oceanprotocol/orglink/contributors)
+--->
 
 ## Research plan:
 
