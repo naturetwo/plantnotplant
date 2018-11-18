@@ -30,6 +30,21 @@ TODO Change this to match the repo name and testing environments
 
 TODO
 
+## Hardware
+
+Motor 1.7 A / stage
+
+DRV 8825 max continuous current: 1.5 A
+
+Target current: 1.3 A (derated)
+
+VREF = Current limit / 2 = 0.65V
+
+SEE: https://forum.arduino.cc/index.php?topic=415724.0
+
+
+
+
 
 ## Prerequisites
 
