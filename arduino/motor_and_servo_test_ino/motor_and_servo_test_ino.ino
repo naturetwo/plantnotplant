@@ -9,8 +9,11 @@ int position = 0; // Variable to store position
 // define pin used
 const int PIN_STEP= 9;
 const int PIN_DIRECTION = 8;
-const int stage_delay = 10;
+const int STEPS_ROTATE = 200;
 
+
+// Other settings
+const int stage_delay = 10;
 
 void setup() {
   // Stepper pins
@@ -23,10 +26,31 @@ void setup() {
 }
 
 
+// void change_direction (){
+//   digitalWrite(PIN_DIRECTION,HIGH); //Enables the motor to move in a perticular direction
+// }
+
+void stepper_rotate(float rotations){
+  if (rotations<0){
+    digitalWrite(PIN_DIRECTION,LOW)
+  } 
+  else {
+    digitalWrite(PIN_DIRECTION,HIGH)
+  }
+  int steps = rotations * STEPS_ROTATE;
+    for(int x = 0; x < 200; x++){
+      digitalWrite(PIN_STEP,HIGH);
+      delayMicroseconds(500);
+      digitalWrite(PIN_STEP,LOW);
+      delayMicroseconds(500);
+  }  
+}  
 
 void loop() {
   // RUN STEPPER FORWARD 1
-    digitalWrite(PIN_DIRECTION,HIGH); //Enables the motor to move in a perticular direction
+  digitalWrite(PIN_DIRECTION,LOW); //Enables the motor to move in a opposite direction
+  
+//    change_direction();
     // for one full rotation required 200 pulses
     for(int x = 0; x < 200; x++){
       digitalWrite(PIN_STEP,HIGH);
@@ -45,7 +69,9 @@ void loop() {
 
   delay(stage_delay); // delay for one second
 
+
   // RUN STEPPER BACK 3
+//  change_direction();
   digitalWrite(PIN_DIRECTION,HIGH); //Enables the motor to move in a opposite direction
   // for three full rotation required 600 pulses
   for(int x = 0; x < 600; x++){
