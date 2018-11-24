@@ -13,9 +13,10 @@
 #include <Wire.h>
 
 const int ledPin = 13; // onboard LED
-static_assert(LOW == 0, "Expecting LOW to be 0");
+// static_assert(LOW == 0, "Expecting LOW to be 0");
 
 void setup() {
+  static_assert(LOW == 0, "Expecting LOW to be 0");
   Wire.begin(0x8);                // join i2c bus with address #8
   Wire.onReceive(receiveEvent); // register event
   pinMode(ledPin, OUTPUT);
