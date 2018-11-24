@@ -1,4 +1,4 @@
-from smbus import SMBus
+from smbus2 import SMBus
 
 addr = 0x8 # bus address
 bus = SMBus(1) # indicates /dev/ic2-1
