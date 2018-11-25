@@ -30,3 +30,69 @@ Disconnect USB, and connect Arduino to RPi GND and +5V
 OR keep USB connected, and only connect the RPi GND to Arduino. This allows `Serial.print().`
 
 Ensure i2cdetect finds the address 08
+
+
+
+# Controller
+
+See this [guide](https://pythonhosted.org/triangula/sixaxis.html), summarized here: 
+
+You’ll need to install some packages on your Pi first, and enable the bluetooth services:
+
+```shell
+sudo apt-get install bluetooth libbluetooth3 libusb-dev
+sudo systemctl enable bluetooth.service
+```
+
+You also need to add the default user to the `bluetooth` group:
+
+```shell
+sudo usermod -G bluetooth -a pi
+```
+
+This tool can help debug the connection
+
+```bash
+sudo apt-get install joystick
+sudo jstest --normal js0
+```
+
+Get and build the command line pairing tool:
+
+```shell
+wget http://www.pabr.org/sixlinux/sixpair.c
+gcc -o sixpair sixpair.c -lusb
+```
+
+Connect controller with USB. 
+
+```shell
+sudo ./sixpair
+Current Bluetooth master: 00:00:00:00:00:00
+Setting master bd_addr to b8:27:eb:97:fd:6f
+```
+
+Disconnect controller. 
+
+Reboot the Pi.
+
+Run the bluetooth service, (not as `sudo`!). 
+
+```
+bluetoothctl
+```
+
+```shell
+[bluetooth]# agent on
+Agent registered
+[bluetooth]# trust 60:38:0E:CC:0C:E3
+[CHG] Device 60:38:0E:CC:0C:E3 Trusted: yes
+Changing 60:38:0E:CC:0C:E3 trust succeeded
+[bluetooth]# quit
+Agent unregistered
+[DEL] Controller 5C:F3:70:66:5C:E2
+```
+
+Disconnect controller.
+
+Press center button, check `/dev/input`.
