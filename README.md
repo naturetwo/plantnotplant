@@ -81,6 +81,8 @@ WiFi networking.
 
 Tensorflow 1.8.0
 
+Numpy 1.14.4
+
 ##### Offline training: [corral](https://github.com/MarcusJones/corral)
 
 3D CNN

@@ -98,6 +98,18 @@ void receiveEvent(int howMany)
       servo1.write(180);
       break;
 
+    case 'w':
+      sprintf(str, "%c : wait 500 ms!", char(c));
+      Serial.print(str);
+      delay(500);
+      break;
+
+    case 'W':
+      sprintf(str, "%c : wait 1000 ms!", char(c));
+      Serial.print(str);
+      delay(1000);
+      break;
+
     default:
       sprintf(str, "%c : Unrecognized byte!\n", char(c));
       Serial.print(str);
