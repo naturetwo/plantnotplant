@@ -1,3 +1,7 @@
+#
+# f, b
+# 1, 2, 3
+# w, W
 from smbus import SMBus
 
 addr = 0x8 # bus address
