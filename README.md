@@ -48,7 +48,7 @@ TODO Change this to match the repo name and testing environments
   - Python stack
   - Keras/Tensorflow
   - Open CV
-  
+
 1) 2-axis mounted camera controlled by Arduino
   - Stepper motor for linear
   - Servo for camera scanning
@@ -65,9 +65,27 @@ VREF = Current limit / 2 = 0.65V
 SEE: https://forum.arduino.cc/index.php?topic=415724.0
 ```
 
+### Communication protocols:
+
+Arduino slave, connected by I2C bus to RPi master.
+
+Bluetooth PS3 controller.
+
+WiFi networking. 
 
 ### Software:
+
+##### Arduino motor control software [link](/plantnotplant/arduino/stepper_servo_i2c/stepper_servo_i2c.ino)
+
+##### Onboard systems: [MuleAI](https://github.com/MarcusJones/muleAI)
+
+Tensorflow 1.8.0
+
+##### Offline training: [corral](https://github.com/MarcusJones/corral)
+
 3D CNN
+
+
 
 ---
 
