@@ -1,4 +1,5 @@
 #include <Servo.h>
+#include <Arduino.h>
 
 // Servo settings
 Servo servo1;
@@ -10,7 +11,7 @@ int position = 0; // Variable to store position
 const int PIN_STEP= 9;
 const int PIN_DIRECTION = 8;
 const int STEPS_ROTATE = 200;
-
+void stepper_rotate(float rotations);
 
 // Other settings
 const int stage_delay = 10;
@@ -32,10 +33,10 @@ void setup() {
 
 void stepper_rotate(float rotations){
   if (rotations<0){
-    digitalWrite(PIN_DIRECTION,LOW)
+    digitalWrite(PIN_DIRECTION,LOW);
   } 
   else {
-    digitalWrite(PIN_DIRECTION,HIGH)
+    digitalWrite(PIN_DIRECTION,HIGH);
   }
   int steps = rotations * STEPS_ROTATE;
     for(int x = 0; x < 200; x++){

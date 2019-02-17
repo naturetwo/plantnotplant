@@ -27,6 +27,7 @@ int position = 0;           // Variable to store position
 const int DELAY_SERVO = 10; // Delay in ms
 
 // Stepper settings
+// Stepper accepts
 const int PIN_STEP = 9;
 const int PIN_DIRECTION = 8;
 const int STEPS_ROTATE = 200;
@@ -128,7 +129,7 @@ void stepper_rotate(float rotations)
   // Smoothly rotate specified rotations
   // Accepts a signed floating point number
   // Fractional rotations possible
-
+  
   // Get the direction from the sign
   if (rotations < 0)
   {
@@ -143,6 +144,9 @@ void stepper_rotate(float rotations)
 
   // Get the required steps
   int steps = abs(rotations) * STEPS_ROTATE;
+ 
+  sprintf(str, "%d rotations, %d steps \n", rotations, steps);
+  Serial.print(str)
 
   // Rotate
   for (int x = 0; x < steps; x++)

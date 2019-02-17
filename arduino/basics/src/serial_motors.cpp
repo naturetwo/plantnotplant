@@ -12,6 +12,8 @@ const int DELAY_SERVO = 10; // Delay in ms
 const int PIN_STEP= 9;
 const int PIN_DIRECTION = 8;
 const int STEPS_ROTATE = 200;
+const int STEP_SPEED = 500; // Delay in [ms]
+void stepper_rotate(float rotations);
 
 // Global variables
 int ByteReceived;
@@ -78,24 +80,35 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
   }
 }
 
-void stepper_rotate(float rotations){
-  // Get the direction
-  if (rotations<0){
-    digitalWrite(PIN_DIRECTION,LOW);
+void stepper_rotate(float rotations)
+{
+  // Smoothly rotate specified rotations
+  // Accepts a signed floating point number
+  // Fractional rotations possible
+
+  // Get the direction from the sign
+  if (rotations < 0)
+  {
+    // Backwards
+    digitalWrite(PIN_DIRECTION, LOW);
   }
-  else {
-    digitalWrite(PIN_DIRECTION,HIGH);
+  else
+  {
+    // Forwards
+    digitalWrite(PIN_DIRECTION, HIGH);
   }
-  
+
   // Get the required steps
   int steps = abs(rotations) * STEPS_ROTATE;
-  
-  // Rotate
-  for(int x = 0; x < steps; x++){
-      digitalWrite(PIN_STEP,HIGH);
-      delayMicroseconds(500);
-      digitalWrite(PIN_STEP,LOW);
-      delayMicroseconds(500);
-  }  
-}
+  sprintf(str, "%d rotations, %d steps \n", int(rotations), steps);
+  Serial.print(str);
 
+  // Rotate
+  for (int x = 0; x < steps; x++)
+  {
+    digitalWrite(PIN_STEP, HIGH);
+    delayMicroseconds(STEP_SPEED);
+    digitalWrite(PIN_STEP, LOW);
+    delayMicroseconds(STEP_SPEED);
+  }
+}
