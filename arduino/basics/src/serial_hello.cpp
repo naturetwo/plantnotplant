@@ -1,8 +1,9 @@
 #include <Arduino.h>
 
 int counter = 1;
+int BAUD = 9600;
 void setup(){
-  Serial.begin(0);
+  Serial.begin(BAUD);
 }
 void loop(){
   Serial.println("Hello World");

@@ -8,6 +8,7 @@
    - 
  - V1.00 02/11/13
    Questions: terry@yourduino.com */
+#include <Arduino.h>
 
 /*-----( Import needed libraries )-----*/
 /*-----( Declare Constants and Pin Numbers )-----*/
