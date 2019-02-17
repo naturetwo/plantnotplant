@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 int counter = 1;
 void setup(){
   Serial.begin(0);
