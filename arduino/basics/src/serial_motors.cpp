@@ -39,7 +39,7 @@ int in4 = 6;  // H-bridge
 
 int TRK_START_PWM = 100;
 int TRK_STOP_PWM = 256;
-int TRK_STEP_PWM = 2;
+int TRK_STEP_PWM = 5;
 void left_forward();
 void right_forward();
 void demo_two();
@@ -188,24 +188,24 @@ void left_forward(){
   digitalWrite(in1, LOW);
   digitalWrite(in2, HIGH);  
 
-  // accelerate from zero to maximum speed  
+  // accelerate 
   for (int i = TRK_START_PWM; i < TRK_STOP_PWM; i=i+TRK_STEP_PWM)
   {
     sprintf(str, "%d\n",i);
     Serial.print(str);  
-
     analogWrite(enA, i);
     delay(20);
   }
-  // decelerate from maximum speed to zero
-  for (int i = TRK_STOP_PWM; i <= TRK_START_PWM; i=i-TRK_STEP_PWM)  
+
+  // decelerate 
+  for (int i = TRK_STOP_PWM; i >= TRK_START_PWM; i=i-TRK_STEP_PWM)  
   {
     sprintf(str, "%d\n",i);
     Serial.print(str);  
-
     analogWrite(enA, i);
     delay(20);
   } 
+
   // Turn off
   digitalWrite(in1, LOW);
   digitalWrite(in2, LOW); 
@@ -219,16 +219,17 @@ void right_forward(){
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);  
 
-  // accelerate from zero to maximum speed    
-  for (int i = 0; i < 256; i++)
+  // accelerate 
+  for (int i = TRK_START_PWM; i < TRK_STOP_PWM; i=i+TRK_STEP_PWM)
   {
     sprintf(str, "%d\n",i);
     Serial.print(str); 
     analogWrite(enB, i);
     delay(20);
   }
-  // decelerate from maximum speed to zero
-  for (int i = 255; i >= 0; --i)
+
+  // decelerate 
+  for (int i = TRK_STOP_PWM; i >= TRK_START_PWM; i=i-TRK_STEP_PWM) 
   {
     sprintf(str, "%d\n",i);
     Serial.print(str); 
