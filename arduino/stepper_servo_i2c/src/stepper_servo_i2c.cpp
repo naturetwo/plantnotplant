@@ -20,6 +20,7 @@
 int i2c_address = 0x8;
 
 // Servo settings
+// Servo accepts write(int), where int is 0 - 360 [degrees]
 Servo servo1;
 const int PIN_SERVO = 11;
 int position = 0;           // Variable to store position

@@ -1,4 +1,5 @@
 #include <Servo.h>
+#include <Arduino.h>
 
 // Servo settings
 Servo servo1;
@@ -15,10 +16,11 @@ const int STEPS_ROTATE = 200;
 // Global variables
 int ByteReceived;
 char str[50];
+int BAUD = 9600;
 
 void setup()  
 {
-  Serial.begin(9600);  
+  Serial.begin(BAUD);  
 
   // Stepper pins
   pinMode(PIN_STEP,OUTPUT);
