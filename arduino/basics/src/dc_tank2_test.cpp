@@ -1,20 +1,65 @@
 #include <Arduino.h>
+#include <Servo.h>
 
-// connect motor controller pins to Arduino digital pins
-// motor one
-int enA = 10;
-int in1 = 9;
-int in2 = 8;
-// motor two
-int enB = 5;
-int in3 = 7;
-int in4 = 6;
+/**
+ * SERVO MOTOR
+ * 
+ */
+Servo servo1;
+const int PIN_SERVO = 13; // DO
+int position = 0; // Variable to store position
+const int DELAY_SERVO = 10; // Delay in ms
+
+
+/**
+ * STEPPER MOTOR
+ * 
+ */
+const int PIN_STEP= 2; // DO
+const int PIN_DIRECTION = 3; //DO 
+const int PIN_EN = 4; // DO
+const int STEPS_ROTATE = 200; // How many steps to take per instruction
+const int STEP_SPEED = 500; // Delay in [ms]
+void stepper_rotate(float rotations); // The rotate method
+
+/**
+ * DC LEFT/RIGHT TRACK
+ * 
+ */
+// LEFT motor
+int enA = 11; // Speed, PWM
+int in1 = 9;  // H-bridge
+int in2 = 8;  // H-bridge
+// RIGHT motor
+int enB = 5;  // Speed, PWM
+int in3 = 7;  // H-bridge
+int in4 = 6;  // H-bridge
+
+
+// Global variables
+int ByteReceived;
+char str[50];
+int BAUD = 9600;
+
 
 void demoOne();
 void demoTwo();
 
 void setup()
 {
+  Serial.begin(BAUD);  
+
+  // Stepper pins
+  pinMode(PIN_STEP,OUTPUT);
+  pinMode(PIN_DIRECTION,OUTPUT);
+  pinMode(PIN_EN,OUTPUT);
+  digitalWrite(PIN_EN,LOW);
+ 
+  // Servo pins
+//   servo1.attach(PIN_SERVO);
+//   servo1.write(180);  
+
+
   // set all the motor control pins to outputs
   pinMode(enA, OUTPUT);
   pinMode(enB, OUTPUT);

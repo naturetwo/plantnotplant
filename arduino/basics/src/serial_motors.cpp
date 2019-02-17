@@ -29,15 +29,21 @@ void stepper_rotate(float rotations); // The rotate method
  * 
  */
 // LEFT motor
-int enA = 10; // Speed, PWM
+int enA = 11; // Speed, PWM
 int in1 = 9;  // H-bridge
 int in2 = 8;  // H-bridge
 // RIGHT motor
 int enB = 5;  // Speed, PWM
 int in3 = 7;  // H-bridge
 int in4 = 6;  // H-bridge
+
+int TRK_START_PWM = 100;
+int TRK_STOP_PWM = 256;
+int TRK_STEP_PWM = 2;
 void left_forward();
 void right_forward();
+void demo_two();
+void demo_one();
 
 
 // Global variables
@@ -120,6 +126,18 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
         Serial.print(str);
         right_forward();
         break;
+      
+      case 'd':
+        sprintf(str, "%c : Run demo_two\n", char(ByteReceived));
+        Serial.print(str);
+        demo_two();
+        break;
+
+      case 'p':
+        sprintf(str, "%c : Run demo_two\n", char(ByteReceived));
+        Serial.print(str);
+        demo_two();
+        break;        
 
       default:
         sprintf(str, "%c : Unrecognized byte!\n", char(ByteReceived));
@@ -165,41 +183,124 @@ void stepper_rotate(float rotations)
 }
 
 
-
 void left_forward(){
+  // turn on motor
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);  
+
   // accelerate from zero to maximum speed  
-  for (int i = 0; i < 256; i++)
+  for (int i = TRK_START_PWM; i < TRK_STOP_PWM; i=i+TRK_STEP_PWM)
   {
+    sprintf(str, "%d\n",i);
+    Serial.print(str);  
+
     analogWrite(enA, i);
     delay(20);
   }
   // decelerate from maximum speed to zero
-  for (int i = 255; i >= 0; --i)
+  for (int i = TRK_STOP_PWM; i <= TRK_START_PWM; i=i-TRK_STEP_PWM)  
   {
+    sprintf(str, "%d\n",i);
+    Serial.print(str);  
+
     analogWrite(enA, i);
     delay(20);
   } 
   // Turn off
   digitalWrite(in1, LOW);
   digitalWrite(in2, LOW); 
+  sprintf(str, "Finished LEFT\n");
+  Serial.print(str);  
 } 
 
 
 void right_forward(){
+  // turn on motor
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);  
+
   // accelerate from zero to maximum speed    
   for (int i = 0; i < 256; i++)
   {
+    sprintf(str, "%d\n",i);
+    Serial.print(str); 
     analogWrite(enB, i);
     delay(20);
   }
   // decelerate from maximum speed to zero
   for (int i = 255; i >= 0; --i)
   {
+    sprintf(str, "%d\n",i);
+    Serial.print(str); 
     analogWrite(enB, i);
     delay(20);
   }
   // Turn off
   digitalWrite(in3, LOW);
   digitalWrite(in4, LOW); 
+  sprintf(str, "Finished RIGHT\n");
+  Serial.print(str);  
 } 
  
+
+
+void demo_two()
+{
+  // this function will run the motors across the range of possible speeds
+  // note that maximum speed is determined by the motor itself and the operating voltage
+  // the PWM values sent by analogWrite() are fractions of the maximum speed possible 
+  // by your hardware
+  // turn on motors
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH); 
+  // accelerate from zero to maximum speed
+  for (int i = 0; i < 256; i++)
+  {
+    analogWrite(enA, i);
+    analogWrite(enB, i);
+    delay(20);
+  } 
+  // decelerate from maximum speed to zero
+  for (int i = 255; i >= 0; --i)
+  {
+    analogWrite(enA, i);
+    analogWrite(enB, i);
+    delay(20);
+  } 
+  // now turn off motors
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);  
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);  
+}
+
+
+
+void demo_one()
+{
+  // this function will run the motors in both directions at a fixed speed
+  // turn on motor A
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  // set speed to 200 out of possible range 0~255
+  analogWrite(enA, 200);
+  // turn on motor B
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  // set speed to 200 out of possible range 0~255
+  analogWrite(enB, 200);
+  delay(2000);
+  // now change motor directions
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);  
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH); 
+  delay(2000);
+  // now turn off motors
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);  
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}
