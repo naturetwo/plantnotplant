@@ -21,8 +21,9 @@ void setup()   /****** SETUP: RUNS ONCE ******/
 {
   Serial.begin(9600);  
   Serial.println("--- Start Serial Monitor SEND_RCVE ---");
-    Serial.println(" Type in Box above, . ");
-  Serial.println("(Decimal)(Hex)(Character)");  
+  Serial.println("Enter a character");
+  Serial.println("1 and 0 turn on/off the board LED");
+  Serial.println("(Decimal)(Hex)(Character)(bitstring)");  
   Serial.println(); 
 }
 //--(end setup )---
