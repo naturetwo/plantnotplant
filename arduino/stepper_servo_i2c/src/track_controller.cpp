@@ -12,33 +12,41 @@
 //
 // Serial API:
 
+#include <Arduino.h>
 #include <Servo.h>
 #include <Wire.h>
-#include <Arduino.h>
 
 // I2C settings
 int i2c_address = 0x8;
 
 // Servo settings
+// Servo accepts write(int), where int is 0 - 360 [degrees]
 Servo servo1;
 const int PIN_SERVO = 11;
 int position = 0;           // Variable to store position
 const int DELAY_SERVO = 10; // Delay in ms
 
 // Stepper settings
-const int PIN_STEP = 9;
-const int PIN_DIRECTION = 8;
+// Stepper accepts
+const int PIN_STEP = 5;
+const int PIN_DIRECTION = 2;
 const int STEPS_ROTATE = 200;
 const int STEP_SPEED = 500; // Delay in [ms]
+const int PIN_EN = 8;
 
 // Serial settings
 char str[50]; // For sprintf
+
+void receiveEvent(int howMany);
+void stepper_rotate(float rotations);
 
 void setup()
 {
   // Stepper pins setup
   pinMode(PIN_STEP, OUTPUT);
   pinMode(PIN_DIRECTION, OUTPUT);
+  pinMode(PIN_EN,OUTPUT);
+  digitalWrite(PIN_EN,LOW);
 
   // Servo pins setup
   servo1.attach(PIN_SERVO);
@@ -124,7 +132,7 @@ void stepper_rotate(float rotations)
   // Smoothly rotate specified rotations
   // Accepts a signed floating point number
   // Fractional rotations possible
-
+  
   // Get the direction from the sign
   if (rotations < 0)
   {
@@ -139,6 +147,8 @@ void stepper_rotate(float rotations)
 
   // Get the required steps
   int steps = abs(rotations) * STEPS_ROTATE;
+ 
+
 
   // Rotate
   for (int x = 0; x < steps; x++)
