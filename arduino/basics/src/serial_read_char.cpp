@@ -8,6 +8,7 @@
    - 
  - V1.00 02/11/13
    Questions: terry@yourduino.com */
+#include <Arduino.h>
 
 /*-----( Import needed libraries )-----*/
 /*-----( Declare Constants and Pin Numbers )-----*/
@@ -20,8 +21,9 @@ void setup()   /****** SETUP: RUNS ONCE ******/
 {
   Serial.begin(9600);  
   Serial.println("--- Start Serial Monitor SEND_RCVE ---");
-    Serial.println(" Type in Box above, . ");
-  Serial.println("(Decimal)(Hex)(Character)");  
+  Serial.println("Enter a character");
+  Serial.println("1 and 0 turn on/off the board LED");
+  Serial.println("(Decimal)(Hex)(Character)(bitstring)");  
   Serial.println(); 
 }
 //--(end setup )---

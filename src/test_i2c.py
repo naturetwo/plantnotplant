@@ -1,3 +1,7 @@
+#
+# f, b
+# 1, 2, 3
+# w, W
 from smbus import SMBus
 from time import sleep
 
