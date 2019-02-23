@@ -1,10 +1,12 @@
+ 
 //Define L298N Dual H-Bridge Motor Controller Pins
-const int IN1  8     //K1、K2 motor direction
-const int IN2  9     //K1、K2 motor direction
-const int IN3  10    //K3、K4 motor direction
-const int IN4  12    //K3、K4 motor direction
-const int ENA  5     //needs to be a PWM pin to be able to control motor speed ENA
-const int ENB  6     //needs to be a PWM pin to be able to control motor speed ENB
+const int IN1  9     //K1、K2 motor direction
+const int IN2  8     //K1、K2 motor direction
+const int ENA  11     //needs to be a PWM pin to be able to control motor speed ENA
+
+const int IN3  6    //K3、K4 motor direction
+const int IN4  5    //K3、K4 motor direction
+const int ENB  7     //needs to be a PWM pin to be able to control motor speed ENB
 
 /*motor control*/
 void go_ahead()  //motor rotate clockwise -->robot go ahead
@@ -12,21 +14,21 @@ void go_ahead()  //motor rotate clockwise -->robot go ahead
   digitalWrite(IN1, LOW);
   digitalWrite(IN2, HIGH);
   digitalWrite(IN3, LOW);
-  digitalWrite(IN4,HIGH);
+  digitalWrite(IN4, HIGH);
 }
 void go_back() //motor rotate counterclockwise -->robot go back
 {
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
   digitalWrite(IN3, HIGH);
-  digitalWrite(IN4,LOW); 
+  digitalWrite(IN4, LOW); 
 }
 void go_stop() //motor brake -->robot stop
 {
   digitalWrite(IN1, LOW);
   digitalWrite(IN2, LOW);
   digitalWrite(IN3, LOW);
-  digitalWrite(IN4,LOW); 
+  digitalWrite(IN4, LOW); 
 }
 void turn_left()  //left motor rotate counterclockwise and right motor rotate clockwise -->robot turn left
 {
