@@ -1,4 +1,8 @@
- 
+
+#include <Arduino.h>
+#include <Wire.h>
+
+
 //Define L298N Dual H-Bridge Motor Controller Pins
 const int IN1  9     //K1、K2 motor direction
 const int IN2  8     //K1、K2 motor direction
