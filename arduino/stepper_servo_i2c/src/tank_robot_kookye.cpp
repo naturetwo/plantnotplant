@@ -1,7 +1,7 @@
-
 #include <Arduino.h>
 #include <Wire.h>
 
+int I2C_ADDRESS = 0x8;
 
 //Define L298N Dual H-Bridge Motor Controller Pins
 const int IN1  9     //K1、K2 motor direction
