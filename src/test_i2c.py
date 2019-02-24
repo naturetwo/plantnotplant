@@ -14,9 +14,11 @@ bus = SMBus(1)  # indicates /dev/ic2-1
 while True:
 
     this_addr = input("Address (8 or 9):")
+    this_addr = int(this_addr)
+    print(this_addr, type(this_addr))
     if this_addr not in [8, 9]:
         continue
-    print("Address selected:", val)
+    print("Address selected:", this_addr)
 
     # this_pin = input("Pin? (1-13)")
     # if this_pin not in list(range(1,14)):
@@ -24,9 +26,10 @@ while True:
 
     this_val = input("Input character:")
 
-    print(hex(this_val))
+#    print(hex(this_val))
     print(hex(ord(this_val)))
     bus.write_byte(this_addr, ord(val))
+    bus.write_byte(this_addr, ord(this_val))
 
 
 #    val = input("Character byte:")
