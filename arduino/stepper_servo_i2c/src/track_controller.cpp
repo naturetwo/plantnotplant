@@ -16,10 +16,12 @@
 #include <Wire.h>
 
 // I2C settings
-int i2c_address = 0x09;
+int i2c_address = 0x08;
 
 // LED Settings
 const int PIN_LED = 12;
+void blink(int cnt, int delay);
+int BLINK_WAIT = 500;
 
 // DC LEFT/RIGHT TRACK
 // LEFT motor
@@ -97,31 +99,46 @@ void receiveEvent(int howMany)
       sprintf(str, "%c : Left ahead\n", char(ByteReceived));
       Serial.print(str);
       left_forward();
+      blink(3,BLINK_WAIT);
       break;
 
     case 'r':
       sprintf(str, "%c : Right ahead\n", char(ByteReceived));
       Serial.print(str);
       right_forward();
+      blink(3,BLINK_WAIT);
       break;
 
     case '1':
       sprintf(str, "%c : Run demo_two\n", char(ByteReceived));
       Serial.print(str);
       demo_two();
+      blink(3,BLINK_WAIT);
       break;
 
     case '2':
       sprintf(str, "%c : Run demo_two\n", char(ByteReceived));
       Serial.print(str);
       demo_two();
+      blink(3,BLINK_WAIT);
       break;
 
     default:
       sprintf(str, "%c : Unrecognized byte!\n", char(ByteReceived));
       Serial.print(str);
+      blink(10,BLINK_WAIT);
       break;
     } // End case-switch
+  }
+}
+
+
+void blink(int cnt, int wait){
+  for (int i=0; i<=cnt; i++){
+    digitalWrite(PIN_LED, HIGH);   // turn the LED on (HIGH is the voltage level)
+    delay(wait);                       // wait for a second
+    digitalWrite(PIN_LED, LOW);    // turn the LED off by making the voltage LOW
+    delay(wait);                       // wait for a second;
   }
 }
 

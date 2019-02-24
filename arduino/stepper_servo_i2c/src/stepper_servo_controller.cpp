@@ -20,6 +20,8 @@ int i2c_address = 0x09;
 
 // LED Settings
 const int PIN_LED = 12;
+void blink(int cnt, int delay);
+int BLINK_WAIT = 500;
 
 // NEO Pixel settings
 const int PIN_NEOPIXEL = 10;
@@ -87,6 +89,15 @@ void loop()
   delay(100);
 }
 
+void blink(int cnt, int wait){
+  for (int i=0; i<=cnt; i++){
+    digitalWrite(PIN_LED, HIGH);   // turn the LED on (HIGH is the voltage level)
+    delay(wait);                       // wait for a second
+    digitalWrite(PIN_LED, LOW);    // turn the LED off by making the voltage LOW
+    delay(wait);                       // wait for a second;
+  }
+}
+
 // function that executes whenever data is received from master
 // this function is registered as an event, see setup()
 // Execute a motor command AND print to serial for debugging
@@ -118,12 +129,14 @@ void receiveEvent(int howMany)
       sprintf(str, "%c : Stepper forward\n", char(c));
       Serial.print(str);
       stepper_rotate(1);
+      blink(3,BLINK_WAIT);
       break;
 
     case 'b':
       sprintf(str, "%c : Stepper backward\n", char(c));
       Serial.print(str);
       stepper_rotate(-1);
+      blink(3,BLINK_WAIT);
       break;
 
     // Servo control
@@ -131,18 +144,21 @@ void receiveEvent(int howMany)
       sprintf(str, "%c : Servo position 1\n", char(c));
       Serial.print(str);
       servo1.write(2); // Just above 0 to prevent motor chatter
+      blink(3,BLINK_WAIT);
       break;
 
     case '2':
       sprintf(str, "%c : Servo position 2\n", char(c));
       Serial.print(str);
       servo1.write(90);
+      blink(3,BLINK_WAIT);
       break;
 
     case '3':
       sprintf(str, "%c : Servo position 3\n", char(c));
       Serial.print(str);
       servo1.write(180);
+      blink(3,BLINK_WAIT);
       break;
 
     // Neopixel Control
@@ -150,12 +166,14 @@ void receiveEvent(int howMany)
       sprintf(str, "%c : NEOPIXEL ON\n", char(c));
       Serial.print(str);
       colorWipe(neoRing.Color(255, 155, 50), 25); // Orange
+      blink(3,BLINK_WAIT);
       break;
 
     case 'p':
       sprintf(str, "%c : NEOPIXEL ON\n", char(c));
       Serial.print(str);
       colorWipe(neoRing.Color(0, 0, 0), 25); // Black
+      blink(3,BLINK_WAIT);
       break;
 
       // case 'w':
@@ -172,7 +190,8 @@ void receiveEvent(int howMany)
 
     default:
       sprintf(str, "%c : Unrecognized byte!\n", char(c));
-      Serial.print(str);
+      Serial.print(str);      
+      blink(10,BLINK_WAIT);
       break;
     } // End case-switch
   }

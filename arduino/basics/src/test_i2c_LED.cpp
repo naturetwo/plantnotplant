@@ -7,7 +7,7 @@ Change the i2c_address as required before uploading.
 #include <Wire.h>
 
 // const int i2c_address = 0x8;
-const int i2c_address = 0x9;
+const int i2c_address = 0x8;
 
 const int PIN_LED = 12;
 // Serial settings
