@@ -15,6 +15,9 @@
 #include <Arduino.h>
 #include <Wire.h>
 
+// I2C settings
+int i2c_address = 0x09;
+
 // LED Settings
 const int PIN_LED = 12;
 
@@ -56,6 +59,11 @@ void setup()
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
+}
+
+void loop()
+{
+  delay(100);
 }
 
 // function that executes whenever data is received from master
