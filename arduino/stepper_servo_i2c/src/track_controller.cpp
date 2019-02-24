@@ -1,5 +1,5 @@
-// Arduino Motor Controller
-// Marcus Jones 25NOV2018
+// Arduino DC track motor controller
+// Marcus Jones 24FEB2019
 //
 // I2C API:
 // I2C Address set with i2c_address=0x8
@@ -77,46 +77,16 @@ void receiveEvent(int howMany)
     // Handle the recieved bytes
     switch (c)
     {
-    case 'f':
+    case 'l':
       sprintf(str, "%c : Stepper forward\n", char(c));
       Serial.print(str);
       stepper_rotate(1);
       break;
 
-    case 'b':
+    case 'r':
       sprintf(str, "%c : Stepper backward\n", char(c));
       Serial.print(str);
       stepper_rotate(-1);
-      break;
-
-    case '1':
-      sprintf(str, "%c : Servo position 1\n", char(c));
-      Serial.print(str);
-      servo1.write(2); // Just above 0 to prevent motor chatter
-      break;
-
-    case '2':
-      sprintf(str, "%c : Servo position 2\n", char(c));
-      Serial.print(str);
-      servo1.write(90);
-      break;
-
-    case '3':
-      sprintf(str, "%c : Servo position 3\n", char(c));
-      Serial.print(str);
-      servo1.write(180);
-      break;
-
-    case 'w':
-      sprintf(str, "%c : wait 500 ms!", char(c));
-      Serial.print(str);
-      delay(500);
-      break;
-
-    case 'W':
-      sprintf(str, "%c : wait 1000 ms!", char(c));
-      Serial.print(str);
-      delay(1000);
       break;
 
     default:

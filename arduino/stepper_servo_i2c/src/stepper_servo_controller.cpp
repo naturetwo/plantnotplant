@@ -1,8 +1,6 @@
 // Arduino Motor Controller
-// Marcus Jones 25NOV2018
+// Marcus Jones 24FEB2019
 //
-// I2C API:
-// I2C Address set with i2c_address=0x8
 // Commands
 // f: Stepper forward 1 rotation
 // b: Stepper backward 1 rotation
@@ -15,38 +13,67 @@
 #include <Arduino.h>
 #include <Servo.h>
 #include <Wire.h>
+#include <Adafruit_NeoPixel.h>
 
 // I2C settings
-int i2c_address = 0x8;
+int i2c_address = 0x09;
+
+
+// LED Settings
+const int PIN_LED = 12;
+
+
+// NEO Pixel settings
+const int PIN_NEOPIXEL = 10;
+const int NUMPIXELS = 16;
+// Parameter 3 = pixel type flags, add together as needed:
+//   NEO_KHZ800  800 KHz bitstream (most NeoPixel products w/WS2812 LEDs)
+//   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
+//   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
+//   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
+Adafruit_NeoPixel neoRing = Adafruit_NeoPixel(NUMPIXELS, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
+void colorWipe(uint32_t c, uint8_t wait);
+
 
 // Servo settings
 // Servo accepts write(int), where int is 0 - 360 [degrees]
 Servo servo1;
-const int PIN_SERVO = 11;
+const int PIN_SERVO = 13;
 int position = 0;           // Variable to store position
 const int DELAY_SERVO = 10; // Delay in ms
 
+
 // Stepper settings
 // Stepper accepts
-const int PIN_STEP = 5;
-const int PIN_DIRECTION = 2;
+const int PIN_STEP = 4;
+const int PIN_DIRECTION = 3;
+const int PIN_EN = 2;
 const int STEPS_ROTATE = 200;
 const int STEP_SPEED = 500; // Delay in [ms]
-const int PIN_EN = 8;
-
-// Serial settings
-char str[50]; // For sprintf
-
-void receiveEvent(int howMany);
 void stepper_rotate(float rotations);
+
+
+// Serial I2C settings
+void receiveEvent(int howMany);
+
+char str[50]; // For sprintf
 
 void setup()
 {
+  // LED
+  pinMode(PIN_LED, OUTPUT);
+  digitalWrite(PIN_LED, LOW);
+
+  // NEOpixel
+  neoRing.begin();
+  neoRing.setBrightness(60);  // Lower brightness and save eyeballs!
+  neoRing.show(); // Initialize all pixels to 'off
+
   // Stepper pins setup
   pinMode(PIN_STEP, OUTPUT);
   pinMode(PIN_DIRECTION, OUTPUT);
-  pinMode(PIN_EN,OUTPUT);
-  digitalWrite(PIN_EN,LOW);
+  pinMode(PIN_EN, OUTPUT);
+  digitalWrite(PIN_EN, LOW);
 
   // Servo pins setup
   servo1.attach(PIN_SERVO);
@@ -77,6 +104,7 @@ void receiveEvent(int howMany)
     // Handle the recieved bytes
     switch (c)
     {
+    // Stepper control
     case 'f':
       sprintf(str, "%c : Stepper forward\n", char(c));
       Serial.print(str);
@@ -89,6 +117,7 @@ void receiveEvent(int howMany)
       stepper_rotate(-1);
       break;
 
+    // Servo control
     case '1':
       sprintf(str, "%c : Servo position 1\n", char(c));
       Serial.print(str);
@@ -107,17 +136,44 @@ void receiveEvent(int howMany)
       servo1.write(180);
       break;
 
-    case 'w':
-      sprintf(str, "%c : wait 500 ms!", char(c));
+    // LED Control
+    case 'L':
+      sprintf(str, "%c : LED ON\n", char(c));
       Serial.print(str);
-      delay(500);
+      digitalWrite(PIN_LED, HIGH);
       break;
 
-    case 'W':
-      sprintf(str, "%c : wait 1000 ms!", char(c));
+    case 'l':
+      sprintf(str, "%c : LED OFF\n", char(c));
       Serial.print(str);
-      delay(1000);
+      digitalWrite(PIN_LED, LOW);
       break;
+
+    // Neopixel Control
+    case 'P':
+      sprintf(str, "%c : NEOPIXEL ON\n", char(c));
+      Serial.print(str);
+      colorWipe(neoRing.Color(255,155,50), 25); // Orange
+      break;
+
+    case 'p':
+      sprintf(str, "%c : NEOPIXEL ON\n", char(c));
+      Serial.print(str);
+      colorWipe(neoRing.Color(0, 0, 0), 25); // Black
+      break;
+
+
+      // case 'w':
+      //   sprintf(str, "%c : wait 500 ms!", char(c));
+      //   Serial.print(str);
+      //   delay(500);
+      //   break;
+
+      // case 'W':
+      //   sprintf(str, "%c : wait 1000 ms!", char(c));
+      //   Serial.print(str);
+      //   delay(1000);
+      //   break;
 
     default:
       sprintf(str, "%c : Unrecognized byte!\n", char(c));
@@ -132,7 +188,7 @@ void stepper_rotate(float rotations)
   // Smoothly rotate specified rotations
   // Accepts a signed floating point number
   // Fractional rotations possible
-  
+
   // Get the direction from the sign
   if (rotations < 0)
   {
@@ -147,8 +203,6 @@ void stepper_rotate(float rotations)
 
   // Get the required steps
   int steps = abs(rotations) * STEPS_ROTATE;
- 
-
 
   // Rotate
   for (int x = 0; x < steps; x++)
@@ -157,5 +211,17 @@ void stepper_rotate(float rotations)
     delayMicroseconds(STEP_SPEED);
     digitalWrite(PIN_STEP, LOW);
     delayMicroseconds(STEP_SPEED);
+  }
+}
+
+
+
+// Fill the dots one after the other with a color
+void colorWipe(uint32_t c, uint8_t wait) {
+  // Iterate over each pixel
+  for(uint16_t i=0; i<neoRing.numPixels(); i++) {
+      neoRing.setPixelColor(i, c);
+      neoRing.show();
+      delay(wait);
   }
 }
