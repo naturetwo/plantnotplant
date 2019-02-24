@@ -18,10 +18,8 @@
 // I2C settings
 int i2c_address = 0x09;
 
-
 // LED Settings
 const int PIN_LED = 12;
-
 
 // NEO Pixel settings
 const int PIN_NEOPIXEL = 10;
@@ -34,14 +32,12 @@ const int NUMPIXELS = 16;
 Adafruit_NeoPixel neoRing = Adafruit_NeoPixel(NUMPIXELS, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
 void colorWipe(uint32_t c, uint8_t wait);
 
-
 // Servo settings
 // Servo accepts write(int), where int is 0 - 360 [degrees]
 Servo servo1;
 const int PIN_SERVO = 13;
 int position = 0;           // Variable to store position
 const int DELAY_SERVO = 10; // Delay in ms
-
 
 // Stepper settings
 // Stepper accepts
@@ -51,7 +47,6 @@ const int PIN_EN = 2;
 const int STEPS_ROTATE = 200;
 const int STEP_SPEED = 500; // Delay in [ms]
 void stepper_rotate(float rotations);
-
 
 // Serial I2C settings
 void receiveEvent(int howMany);
@@ -66,8 +61,8 @@ void setup()
 
   // NEOpixel
   neoRing.begin();
-  neoRing.setBrightness(60);  // Lower brightness and save eyeballs!
-  neoRing.show(); // Initialize all pixels to 'off
+  neoRing.setBrightness(60); // Lower brightness and save eyeballs!
+  neoRing.show();            // Initialize all pixels to 'off
 
   // Stepper pins setup
   pinMode(PIN_STEP, OUTPUT);
@@ -104,6 +99,20 @@ void receiveEvent(int howMany)
     // Handle the recieved bytes
     switch (c)
     {
+
+    // LED Control
+    case 'X':
+      sprintf(str, "%c : LED ON\n", char(c));
+      Serial.print(str);
+      digitalWrite(PIN_LED, HIGH);
+      break;
+
+    case 'x':
+      sprintf(str, "%c : LED OFF\n", char(c));
+      Serial.print(str);
+      digitalWrite(PIN_LED, LOW);
+      break;
+
     // Stepper control
     case 'f':
       sprintf(str, "%c : Stepper forward\n", char(c));
@@ -136,24 +145,11 @@ void receiveEvent(int howMany)
       servo1.write(180);
       break;
 
-    // LED Control
-    case 'L':
-      sprintf(str, "%c : LED ON\n", char(c));
-      Serial.print(str);
-      digitalWrite(PIN_LED, HIGH);
-      break;
-
-    case 'l':
-      sprintf(str, "%c : LED OFF\n", char(c));
-      Serial.print(str);
-      digitalWrite(PIN_LED, LOW);
-      break;
-
     // Neopixel Control
     case 'P':
       sprintf(str, "%c : NEOPIXEL ON\n", char(c));
       Serial.print(str);
-      colorWipe(neoRing.Color(255,155,50), 25); // Orange
+      colorWipe(neoRing.Color(255, 155, 50), 25); // Orange
       break;
 
     case 'p':
@@ -161,7 +157,6 @@ void receiveEvent(int howMany)
       Serial.print(str);
       colorWipe(neoRing.Color(0, 0, 0), 25); // Black
       break;
-
 
       // case 'w':
       //   sprintf(str, "%c : wait 500 ms!", char(c));
@@ -214,14 +209,14 @@ void stepper_rotate(float rotations)
   }
 }
 
-
-
 // Fill the dots one after the other with a color
-void colorWipe(uint32_t c, uint8_t wait) {
+void colorWipe(uint32_t c, uint8_t wait)
+{
   // Iterate over each pixel
-  for(uint16_t i=0; i<neoRing.numPixels(); i++) {
-      neoRing.setPixelColor(i, c);
-      neoRing.show();
-      delay(wait);
+  for (uint16_t i = 0; i < neoRing.numPixels(); i++)
+  {
+    neoRing.setPixelColor(i, c);
+    neoRing.show();
+    delay(wait);
   }
 }
