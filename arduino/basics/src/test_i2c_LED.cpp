@@ -1,12 +1,18 @@
+/* 
+Test I2C connections by controlling LED in PIN 12. 
+Change the i2c_address as required before uploading. 
+ */
+
 #include <Arduino.h>
 #include <Wire.h>
 
-const int i2c_address = 0x8;
-// const int i2c_address = 0x9;
+// const int i2c_address = 0x8;
+const int i2c_address = 0x9;
 
 const int PIN_LED = 12;
 // Serial settings
 char str[50]; // For sprintf
+void receiveEvent(int howMany);
 
 void setup()
 {
