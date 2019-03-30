@@ -42,6 +42,8 @@ void demo_two();
 void demo_one();
 
 // Global variables
+// Serial I2C settings
+void receiveEvent(int howMany);
 int ByteReceived;
 char str[50];
 int BAUD = 9600;
@@ -61,6 +63,10 @@ void setup()
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
+
+  // I2C setup
+  Wire.begin(i2c_address);      // join i2c bus with address #8
+  Wire.onReceive(receiveEvent); // register event
 }
 
 void loop()
